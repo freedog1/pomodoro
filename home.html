@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+    
+        <meta http-equiv="content-type" charset="utf-8">
+
+
+        <!-- テキストボタンの場合 -->
+        <p><a onClick="sound()">このテキストを押すと挨拶します！</a></p>
+<!--
+        <p><a onClick="setTimeout(log,3000)">このテキストを押すと挨拶します！</a></p>
+ 
+-->
+        <!-- 音声ファイルの読み込み 9〜10行目にURLを指定 -->
+        <audio id="sound-file" preload="auto">
+            <source src="decision26.mp3" type="audio/mp3">
+            <source src="decision26.wav" type="audio/wav">
+        </audio>
+        <script>
+//            サウンド
+            function sound(){
+                document.getElementById('sound-file').play();
+            }
+//            タイマー
+            var log = function(){
+              console.log("test");
+            };
+            // 3秒後に"test"と表示されます
+            setTimeout(log, 3000);
+            // タイマーの動作・停止の状態を表すフラグ
+            var isRunning;
+            // タイマーID
+            var timerId;
+            // 残り時間（秒数）、分、秒
+            var secs, m, s;
+            // [スタート]ボタン押下時に呼出されるメソッド
+            function startTimer() {
+              if(isRunning == true)
+                return;
+              else
+                isRunning = true;
+                  // 1秒毎に残り時間を表示
+                timerId = setInterval(function() {
+                secs--;
+                m = Math.floor(secs / 60);
+                s = secs % 60; 
+                m = "0" + m;
+                if(s < 10)
+                  s = "0" + s;
+                $("id_disp").innerHTML = m + ":" + s;
+                if(secs == 0) {
+                  alert("経過しました。");
+                  clearTimer();
+                }
+              }, 1000);
+            }
+            // [ストップ]ボタン押下時に呼出されるメソッド
+            function stopTimer() {
+              if(isRunning == false) {
+                return;
+              } else {
+                clearInterval(timerId);
+                isRunning = false;
+              }
+            }function $(id) {
+              return document.getElementById(id);
+            }
+
+            function init() {
+              // 変数の初期化
+              isRunning = false;
+              secs = 180;
+              m = s = 0;
+              // イベントリスナの登録
+              $("id_start").addEventListener("click", startTimer, false);
+              $("id_stop").addEventListener("click", stopTimer, false);
+              $("id_clear").addEventListener("click", clearTimer, false);
+            }
+            window.onload = init;
+            
+            
+            
+        </script>
+    </body>
+</html>
