@@ -9,6 +9,7 @@
 
         <!-- テキストボタンの場合 -->
         <p><a onClick="sound()">このテキストを押すと挨拶します！</a></p>
+        <p><a onClick="sound()">このテキストを押すと挨拶します！</a></p>
 <!--
         <p><a onClick="setTimeout(log,3000)">このテキストを押すと挨拶します！</a></p>
  
@@ -23,12 +24,16 @@
             function sound(){
                 document.getElementById('sound-file').play();
             }
+            
 //            タイマー
             var log = function(){
               console.log("test");
             };
             // 3秒後に"test"と表示されます
             setTimeout(log, 3000);
+            
+            
+            
             // タイマーの動作・停止の状態を表すフラグ
             var isRunning;
             // タイマーID
@@ -74,14 +79,17 @@
               secs = 180;
               m = s = 0;
               // イベントリスナの登録
+//                クリックしたらstartTimer関数が呼び足される
               $("id_start").addEventListener("click", startTimer, false);
               $("id_stop").addEventListener("click", stopTimer, false);
               $("id_clear").addEventListener("click", clearTimer, false);
             }
             window.onload = init;
             
-            
-            
         </script>
+        <div id="id_start">ボタン</div>
+        <div id="id">ボタン</div>
+
+        
     </body>
 </html>
