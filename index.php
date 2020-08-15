@@ -12,6 +12,13 @@
     <title>ポモドーロ</title>
     <style>
         /* ここにCSSを書いていきます。 */
+        #rest-time{
+            display: none;
+        }
+        
+        
+        
+        
     </style>
 </head>
 <body>
@@ -25,6 +32,7 @@
 </div>
 <script type="text/javascript">
     var status = 0; // 0:停止中 1:動作中
+    var work_status = 0; // 0:作業中 1:休憩中
     var time = 100;
     var startBtn = document.getElementById("startBtn");
     var timerLabel = document.getElementById('timerLabel');
@@ -57,7 +65,23 @@
         timerLabel.innerHTML = '00:01:00';
         // スタートボタンを押せるようにする
         startBtn.disabled = false;
+        // 表示切り替え
+        var el = $("timer-type");
+        el.innerHTML = "25分作業";
     }
+//    休憩時間
+    function rest(){
+        // 停止中にする
+        status = 0;
+        // タイムを0に戻す
+        time = 50;
+        // タイマーラベルをリセット
+        timerLabel.innerHTML = '00:0:50';
+        // スタートボタンを押せるようにする
+        startBtn.disabled = false;
+    }
+    //表示変更function
+    function $(id) { return document.getElementById(id); }
 
     function timer(){
         // ステータスが動作中の場合のみ実行
@@ -87,20 +111,33 @@
                 
                 //0になったらreset()を呼ぶ
                 if(time == 0) {
+//                    作業時間の登録
+//                    $.ajax({
+//                        url : "record.php",
+//                        type : "POST",
+//                        data : {work_time:25, post_data_2:"piyo"}
+//                    }).done(function(response, textStatus, xhr) {
+//                        console.log("ajax通信に成功しました");
+//                        console.log(response[0]);
+//                        console.log(response[1]);
+//                    }).fail(function(xhr, textStatus, errorThrown) {
+//                        console.log("ajax通信に失敗しました");
+//                    });
                     
-                    $.ajax({
-                        url : "record.php",
-                        type : "POST",
-                        data : {work_time:25, post_data_2:"piyo"}
-                    }).done(function(response, textStatus, xhr) {
-                        console.log("ajax通信に成功しました");
-                        console.log(response[0]);
-                        console.log(response[1]);
-                    }).fail(function(xhr, textStatus, errorThrown) {
-                        console.log("ajax通信に失敗しました");
-                    });
-                    
-                    reset();
+//                    作業と休憩の表示切り替え
+                    if(work_status == 0){
+                        var el = $("timer-type");
+                        el.innerHTML = "5分休憩";
+                        work_status = 1;
+                        alert("お疲れ様です！");
+                        rest();
+                    }else{
+                        var el = $("timer-type");
+                        el.innerHTML = "25分作業";
+                        work_status = 0;
+                        alert("作業を始めましょう!");
+                        reset();
+                    }
                 }
                 // 再びtimer()を呼び出す
                 timer();
