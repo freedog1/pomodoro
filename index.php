@@ -111,7 +111,11 @@
                 
                 //0になったらreset()を呼ぶ
                 if(time == 0) {
-//                    作業時間の登録
+                    if(work_status == 0){
+                        var el = $("timer-type");
+                        el.innerHTML = "お疲れ様です。5分休憩しましょう!";
+                        work_status = 1;
+//                        作業時間の登録
 //                    $.ajax({
 //                        url : "record.php",
 //                        type : "POST",
@@ -125,17 +129,11 @@
 //                    });
                     
 //                    作業と休憩の表示切り替え
-                    if(work_status == 0){
-                        var el = $("timer-type");
-                        el.innerHTML = "5分休憩";
-                        work_status = 1;
-                        alert("お疲れ様です！");
                         rest();
                     }else{
                         var el = $("timer-type");
-                        el.innerHTML = "25分作業";
+                        el.innerHTML = "25分作業を始めましょう!";
                         work_status = 0;
-                        alert("作業を始めましょう!");
                         reset();
                     }
                 }
