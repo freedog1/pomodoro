@@ -14,12 +14,16 @@
                   exit;
                 }
 
-            $daysql = "SELECT * FROM work WHERE stop_at BETWEEN '2020-08-15 17:28:02' AND '2020-08-16 16:37:02'";
-            $weeksql = "SELECT * FROM work WHERE stop_at BETWEEN '2020-08-10 17:28:02' AND '2020-08-16 16:37:02'";
+            $daysql = "SELECT * FROM work WHERE stop_at BETWEEN :today1 AND :today2";
+            $weeksql = "SELECT * FROM work WHERE stop_at BETWEEN :week1 AND :today2";
             $day = $pdo->prepare($daysql);
             $week = $pdo->prepare($weeksql);
 
             date_default_timezone_set('Asia/Tokyo');
+            $day->bindValue(':today1',date("Y/m/d 00:00:00"));
+            $day->bindValue(':today2',date("Y/m/d 23:59:59"));
+            $week->bindValue(':week1',date("Y/m/d 00:00:00", strtotime("-6 day")));
+            $week->bindValue(':today2',date("Y/m/d 23:59:59"));
     //        $stmt->bindValue(':num',date("Y/m/d H:i:s"));
     //        $stmt->bindValue(':num',7);
             if($day->execute()){
