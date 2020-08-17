@@ -1,36 +1,19 @@
+
 <?php
 //DB接続
 try {
-    // PDOインスタンスを生成    
-    $ini = parse_ini_file('./db.ini',FALSE);
-    $pdo = new PDO('mysql:host='.$ini['host'].';dbname='.$ini['dbname'].';charset=utf8', $ini['dbuser'], $ini['dbpass']);
-    
-        // エラー（例外）が発生した時の処理を記述
-        } catch (PDOException $e) {
+            // PDOインスタンスを生成    
+            $ini = parse_ini_file('./db.ini',FALSE);
+            $pdo = new PDO('mysql:host='.$ini['host'].';dbname='.$ini['dbname'].';charset=utf8', $ini['dbuser'], $ini['dbpass']);
 
-          // エラーメッセージを表示させる
-          echo 'データベースにアクセスできません！' . $e->getMessage();
-          // 強制終了
-          exit;
-        }
+                // エラー（例外）が発生した時の処理を記述
+                } catch (PDOException $e) {
 
-
-function record(){
-                    $sql = "INSERT INTO users (start_at,stop_at,time,stop_count) VALUES  (:start_at,:stop_at,:time,:stop_count)";
-//                    $sql = "INSERT INTO work (work_time) VALUES  (:work_time)";
-                    $stmt = $pdo->prepare($sql);
-                    date_default_timezone_set('Asia/Tokyo');
-                    $stmt->bindValue(':start_at',date("Y/m/d H:i:s"));
-                    $stmt->bindValue(':stop_at',date("Y/m/d H:i:s"));
-                    $stmt->bindValue(':stop_count',25);
-                    $stmt->bindValue(':work_time',25);
-                    if($stmt->execute()){
-                        echo "成功";
-                    }else{
-                        echo "失敗";
-    
-                    }
-}
+                  // エラーメッセージを表示させる
+                  echo 'データベースにアクセスできません！' . $e->getMessage();
+                  // 強制終了
+                  exit;
+                }
 
 //ajax送信でPOSTされたデータを受け取る
 $work_time = $_POST['work_time'];
