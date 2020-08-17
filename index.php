@@ -24,8 +24,6 @@
             $day->bindValue(':today2',date("Y/m/d 23:59:59"));
             $week->bindValue(':week1',date("Y/m/d 00:00:00", strtotime("-6 day")));
             $week->bindValue(':today2',date("Y/m/d 23:59:59"));
-    //        $stmt->bindValue(':num',date("Y/m/d H:i:s"));
-    //        $stmt->bindValue(':num',7);
             if($day->execute()){
     //          テーブルのレコード数を取得する
                 $day_row_cnt = $day->rowCount();
@@ -48,7 +46,7 @@
 
             }
     }
- 
+
 
 ?>
 
@@ -60,6 +58,7 @@
   src="https://code.jquery.com/jquery-3.5.1.js"
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous"></script>
+
     
     
     <meta charset="utf-8">
@@ -185,17 +184,18 @@
                         el.innerHTML = "お疲れ様です。5分休憩しましょう!";
                         work_status = 1;
 //                        作業時間の登録
-//                    $.ajax({
-//                        url : "record.php",
-//                        type : "POST",
-//                        data : {work_time:25, post_data_2:"piyo"}
-//                    }).done(function(response, textStatus, xhr) {
-//                        console.log("ajax通信に成功しました");
-//                        console.log(response[0]);
-//                        console.log(response[1]);
-//                    }).fail(function(xhr, textStatus, errorThrown) {
-//                        console.log("ajax通信に失敗しました");
-//                    });
+                    $.ajax({
+                        url : "record.php",
+                        type : "POST",
+                        data : {work_time:25, post_data_2:"piyo"}
+                    }).done(function(response, textStatus, xhr) {
+                        console.log("ajax通信に成功しました");
+                        console.log(response[0]);
+                        console.log(response[1]);
+                    }).fail(function(xhr, textStatus, errorThrown) {
+                        console.log("ajax通信に失敗しました");
+                    });
+                        
                     
 //                    作業と休憩の表示切り替え
                         rest();
@@ -219,3 +219,4 @@
     
 
 </body>
+</html>
