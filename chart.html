@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+        
+    </head>
+    <body>
+        <p class="title">chartist.js</p>
+        <div id="chart"></div>  
+        <script type="text/javascript">
+        var data = {
+          labels: ['', 'Tue', 'Wed', 'Thu', 'Fri'],
+          series: [
+            [5, 2, 4, 2, 0],
+          ]
+        };
+        var options = {
+          fullWidth: true,
+          height: 200
+        };
+        new Chartist.Line('#chart', data, options);
+        </script>
+    
+<!--        <div class="ct-chart ct-perfect-fourth"></div>-->
+
+    
+    </body>
+    
+    
+</html>
+
+
+
+
+
+<style type="text/css">
+            .title{margin:30px 0 0;text-align:center;}
+            #chart{
+              margin:10px auto;
+              width:100%;
+              max-width:600px;
+            }  
+</style>
