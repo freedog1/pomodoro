@@ -5,6 +5,9 @@
         <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
         <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
         
+        
+        
+        
     </head>
     <body>
         <p class="title">chartist.js</p>
@@ -28,12 +31,14 @@
                    now.add(1, "day").format("DD"),
                    now.add(1, "day").format("DD")],
           series: [
-            [15,10, 10, 0],
+            [15,10, 10, 0,10],
           ]
         };
         var options = {
           fullWidth: true,
-          height: 200
+          height: 300,
+            width:600
+            
         };
         new Chartist.Line('#chart', data, options);
             
