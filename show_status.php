@@ -15,32 +15,23 @@ try {
       // 強制終了
       exit;
     }
-
-//受け取ったデータを配列に格納
-//$return_array = array($work_time, $post_data_2);
-
+//    today1からtoday2間に登録されたレコード呼び出し
     $sql = "SELECT * FROM work WHERE stop_at BETWEEN :today1 AND :today2";
 
     $stmt = $pdo->prepare($sql);
+    //タイムゾーン設定
     date_default_timezone_set('Asia/Tokyo');
+//    1日毎、1週間のレコード数を配列に格納
     for($i = 0;$i<7;$i++){
-//        $stmt->bindValue(':today1',date("Y/m/d 00:00:00"));
-//        $stmt->bindValue(':today2',date("Y/m/d 23:59:59"));
-        $stmt->bindValue(':today1',date("Y/m/d 00:00:00", 
-        strtotime("-{$i} day")));
-        $stmt->bindValue(':today2',date("Y/m/d 23:59:59", 
-        strtotime("-{$i} day")));
+        //today1設定
+        $stmt->bindValue(':today1',date("Y/m/d 00:00:00", strtotime("-{$i} day")));
+        //today2設定
+        $stmt->bindValue(':today2',date("Y/m/d 23:59:59", strtotime("-{$i} day")));
 
-        echo date("Y/m/d H:i:s",strtotime("-{$i} day"));
-        echo "<br />";
         if($stmt->execute()){
         //   テーブルのレコード数を取得する
             $day_row_cnt = $stmt->rowCount();
-            echo $day_row_cnt;
-            echo "<br />";
             $count[$i] = $day_row_cnt;
-            echo $count[$i];
-            echo "<br />";
             if($i == 0){
             $php_array = array(
                 $i => $count[$i],
@@ -54,13 +45,7 @@ try {
         }
     }
 
-//    //ヘッダーの設定
-//    header('Content-type:application/json; charset=utf8');
-//    //「$return_array」をjson_encodeして出力
-//    echo json_encode($return_array);
-
-
-    // 連想配列($array)をJSONに変換(エンコード)する
+    // 配列($array)をJSONに変換(エンコード)する
     $php_json = json_encode($php_array);
 ?>
 
@@ -70,6 +55,7 @@ try {
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
+<!--        日付取得のライブラリ-->
         <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
         <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
         <!-- jquery-->
@@ -85,31 +71,24 @@ try {
         <div id="chart"></div> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js" type="text/javascript"></script>
         <script type="text/javascript">
+            //php呼び出し
+            let js_array = <?php echo $php_json; ?>;
             
-            
-                let js_array = <?php echo $php_json; ?>;
-                
-                
-                
-                
             window.onload = function () {
+                //今日の日付呼び出し
                 var now = moment();
                 var today = now.format("MM/DD");
-                console.log(today);
-//                var tomorrow = today.add(1, "months").format("MM/DD");
-//                console.log(tomorrow);
-                var date = moment('2015-01-23');
-                console.log(now.add(1, "day").format("MM/DD")); // 2015-02-23
 
         var data = {
-            
-          labels: [now.add(-7, "day").format("MM/DD"), 
+            //x軸
+          labels: [now.add(-6, "day").format("MM/DD"), 
                    now.add(1, "day").format("DD"),
                    now.add(1, "day").format("DD"),
                    now.add(1, "day").format("DD"),
                    now.add(1, "day").format("DD"),
                    now.add(1, "day").format("DD"),
                    now.add(1, "day").format("DD")],
+            //y軸
           series: [
             [js_array[6],
              js_array[5], 
