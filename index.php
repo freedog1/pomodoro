@@ -15,6 +15,10 @@
         #rest-time{
             display: none;
         }
+        #timerType{
+            color: crimson;
+            font-size: 30px;
+        }
         
     </style>
 </head>
@@ -22,7 +26,8 @@
 <div class="container">
     <h1 class="title">ポモドーロタイマー</h1>
     <h2 id="timerType">25分作業</h2>
-    <h1 id="timerLabel">00:01:00</h1>
+<!--    <h1 id="timerLabel">00:01:00</h1>-->
+    <h1 id="timerLabel">25:00:00</h1>
     <input type="button" class="myButton ajax" onclick="start()" value="START" id="startBtn">
     <input type="button" class="myButton" onclick="stop()" value="STOP">
     <input type="button" class="myButton" onclick="reset()" value="RESET">
@@ -42,7 +47,7 @@
 
     
     <div id="show_status">
-    <a href="show_status.php">ポモドーロの記録を見る</a>
+    <a target=”_blank” href="show_status.php">ポモドーロの記録を見る</a>
     </div>
     
 </div>
@@ -51,7 +56,8 @@
 <script type="text/javascript">
     var status = 0; // 0:停止中 1:動作中
     var work_status = 0; // 0:作業中 1:休憩中
-    var time = 100;
+//    var time = 100;
+    var time = 150000;
     var startBtn = document.getElementById("startBtn");
     var timerLabel = document.getElementById('timerLabel');
     var timerType = document.getElementById('timerType');
@@ -83,9 +89,10 @@
         // 停止中にする
         status = 0;
         // タイムを0に戻す
-        time = 100;
+//        time = 100;
+        time = 150000;
         // タイマーラベルをリセット
-        timerLabel.innerHTML = '00:01:00';
+        timerLabel.innerHTML = '25:00:00';
         // スタートボタンを押せるようにする
         startBtn.disabled = false;
         // 表示切り替え
@@ -95,12 +102,13 @@
     function rest(){
         // 停止中にする
         status = 0;
-        // タイムを0に戻す
-        time = 50;
-        // タイマーラベルをリセット
-        timerLabel.innerHTML = '00:0:50';
+        // タイムを5分にする
+//        time = 50;
+        time = 30000;
+        // タイマーラベルをセット
+        timerLabel.innerHTML = '05:00:00';
         // スタートボタンを押せるようにする
-        startBtn.disabled = false;
+        startBtn.disabled = true;
     }
     
     
@@ -155,9 +163,6 @@
 
                     });
 
-
-                        
-                    
 //                    作業と休憩の表示切り替え
                         rest();
                     }else{
@@ -183,7 +188,7 @@
             <source src="decision26.mp3" type="audio/mp3">
             <source src="decision26.wav" type="audio/wav">
         </audio>
-    <p><a onClick="sound()">このテキストを押すと挨拶します！</a></p>
+    
 
 </body>
 </html>
