@@ -26,8 +26,8 @@
 <div class="container">
     <h1 class="title">ポモドーロタイマー</h1>
     <h2 id="timerType">25分作業</h2>
-<!--    <h1 id="timerLabel">00:01:00</h1>-->
-    <h1 id="timerLabel">25:00:00</h1>
+    <h1 id="timerLabel">00:01:00</h1>
+<!--    <h1 id="timerLabel">25:00:00</h1>-->
     <input type="button" class="myButton ajax" onclick="start()" value="START" id="startBtn">
     <input type="button" class="myButton" onclick="stop()" value="STOP">
     <input type="button" class="myButton" onclick="reset()" value="RESET">
@@ -49,6 +49,12 @@
     <div id="show_status">
     <a target=”_blank” href="show_status.php">ポモドーロの記録を見る</a>
     </div>
+    <div id="comment">
+        <p>----コメント----</p>
+        <p>デモ用のため、作業時間を1秒、休憩時間を0.5秒にしています。</p>
+    </div>
+
+    
     
 </div>
     
@@ -56,8 +62,8 @@
 <script type="text/javascript">
     var status = 0; // 0:停止中 1:動作中
     var work_status = 0; // 0:作業中 1:休憩中
-//    var time = 100;
-    var time = 150000;
+    var time = 100;
+//    var time = 150000;
     var startBtn = document.getElementById("startBtn");
     var timerLabel = document.getElementById('timerLabel');
     var timerType = document.getElementById('timerType');
@@ -89,10 +95,11 @@
         // 停止中にする
         status = 0;
         // タイムを0に戻す
-//        time = 100;
-        time = 150000;
+        time = 100;
+//        time = 150000;
         // タイマーラベルをリセット
-        timerLabel.innerHTML = '25:00:00';
+//        timerLabel.innerHTML = '25:00:00';
+        timerLabel.innerHTML = '00:01:00';
         // スタートボタンを押せるようにする
         startBtn.disabled = false;
         // 表示切り替え
@@ -103,12 +110,13 @@
         // 停止中にする
         status = 0;
         // タイムを5分にする
-//        time = 50;
-        time = 30000;
+        time = 50;
+//        time = 30000;
         // タイマーラベルをセット
-        timerLabel.innerHTML = '05:00:00';
+//        timerLabel.innerHTML = '05:00:00';
+        timerLabel.innerHTML = '0:00:50';
         // スタートボタンを押せるようにする
-        startBtn.disabled = true;
+        startBtn.disabled = false;
     }
     
     
@@ -225,8 +233,10 @@
                 if($i == 0){
                     $todayTime = $day_row_cnt * 0.42;
                     echo $todayTime;
+                    echo "h";
                 }elseif($i == 1){
                     echo $day_row_cnt;
+                    echo "回";
                 }
             }
             if($week->execute()){
@@ -235,8 +245,10 @@
                 if($i == 2){
                     $weekTime = $week_row_cnt * 0.42;
                     echo $weekTime;
+                    echo "h";
                 }elseif($i == 3){
                     echo $week_row_cnt;
+                    echo "回";
                 }
 
             }
