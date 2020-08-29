@@ -86,30 +86,12 @@
     }
 }
             
-            var myArray = [...array['activities-heart-intraday']['dataset'].map(value => value.value)];
-var timeArray = [...array['activities-heart-intraday']['dataset'].map(value => value.time)];
+          var myArray = [...array['activities-heart-intraday']['dataset'].map(value => value.value)];
+          var timeArray = [...array['activities-heart-intraday']['dataset'].map(value => value.time)];
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+       var fitbit_data;     
       // 心拍数を取得する
-      var myArray = getHeartrate();
+      getHeartrate();
 
       // 毎分ごとに心拍数をリクエストする
       // setInterval("getHeartrate()", 60000);
@@ -117,21 +99,21 @@ var timeArray = [...array['activities-heart-intraday']['dataset'].map(value => v
       function getHeartrate(){
         $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"},function(data){ // アクセストークンをPOSTする
           var d = $.parseJSON(data);
-//          $(".time").text(d[0].time); // 時間を表示する
-//          $(".heartrate").text(d[0].heartrate); // 心拍数を表示する
+          $(".time").text(d[0].time); // 時間を表示する
+          $(".heartrate").text(d[0].heartrate); // 心拍数を表示する
           
-            
-        
-            
         var valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
           var timeArray = [...d[0]['time']['dataset'].map(value => value.time)];
-                       
-        });
           console.log(d[0]['time']['dataset'][0]);
-          console.log("ssss");
           console.log(d);
-//          return d;
+          after(valueArray);
+        });
       }
+      function after(d){
+        fitbit_data = d;
+      }
+
+               
         
         window.onload = function () {
                 //今日の日付呼び出し
@@ -142,7 +124,7 @@ var timeArray = [...array['activities-heart-intraday']['dataset'].map(value => v
             //x軸
 //          labels: [timeArray],
             //y軸
-          series: [myArray]
+          series: [[59, 58, 59, 58, 58, 58, 58, 58, 58, 57, 58, 58, 59, 56, 59, 60, 63, 61, 63, 63, 62, 62, 62, 62, 62, 62]]
         };
         var options = {
           fullWidth: true,
