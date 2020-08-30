@@ -85,46 +85,55 @@
         "datasetType": "second"
     }
 }
-            
+            var fitbitData;
+          let valueArray;
           var myArray = [...array['activities-heart-intraday']['dataset'].map(value => value.value)];
           var timeArray = [...array['activities-heart-intraday']['dataset'].map(value => value.time)];
             
-       var fitbit_data;     
-      // 心拍数を取得する
-      getHeartrate();
+//      // 心拍数を取得する
+//      getHeartrate();
 
       // 毎分ごとに心拍数をリクエストする
       // setInterval("getHeartrate()", 60000);
 
-      function getHeartrate(){
-        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"},function(data){ // アクセストークンをPOSTする
-          var d = $.parseJSON(data);
-          $(".time").text(d[0].time); // 時間を表示する
-          $(".heartrate").text(d[0].heartrate); // 心拍数を表示する
-          
-        var valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
+//      function getHeartrate(){
+//        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"},function(data){ // アクセストークンをPOSTする
+//          var d = $.parseJSON(data);
+//          $(".time").text(d[0].time); // 時間を表示する
+//          $(".heartrate").text(d[0].heartrate); // 心拍数を表示する
+//          
+//        valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
+//          var timeArray = [...d[0]['time']['dataset'].map(value => value.time)];
+//          console.log(d[0]['time']['dataset'][0]);
+//          console.log(d);
+//        });
+//      }
+        function getHeartrate(){
+          return $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"});
+      }
+      // 心拍数を取得する
+      getHeartrate().done(function(data, status, xhr){
+        var d = $.parseJSON(data);
+
+        valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
+          console.log(valueArray);
           var timeArray = [...d[0]['time']['dataset'].map(value => value.time)];
-          console.log(d[0]['time']['dataset'][0]);
-          console.log(d);
-          after(valueArray);
-        });
-      }
-      function after(d){
-        fitbit_data = d;
-      }
+          showChart(valueArray);
+      }).fail(function(XMLHttpRequest, status, errorThrown) {
+   //失敗時の処理
+      });
+          console.log(valueArray);
 
                
-        
-        window.onload = function () {
+        function showChart(ary){
                 //今日の日付呼び出し
                 var now = moment();
                 var today = now.format("MM/DD");
-
         var data = {
             //x軸
 //          labels: [timeArray],
             //y軸
-          series: [[59, 58, 59, 58, 58, 58, 58, 58, 58, 57, 58, 58, 59, 56, 59, 60, 63, 61, 63, 63, 62, 62, 62, 62, 62, 62]]
+          series: [ary]
         };
         var options = {
           fullWidth: true,
