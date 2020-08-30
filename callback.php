@@ -47,51 +47,18 @@
     <title>Fitbit HeartRate PHP7.0</title>
   </head>
   <body>
-    <p>Time: <span class="time"></span></p>
-    <p>HeartRate: <span class="heartrate"></span> bpm</p>
-    <p>テスト: <span class="test"></span> </p>
+    <p>25分の平均心拍数: <span class="time"></span></p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <p class="title">1週間のポモドーロ回数</p>
+    <p class="title">25分間の心拍数</p>
             
         <div id="chart"></div> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js" type="text/javascript"></script>
         <script type="text/javascript">
             
-            var array = {
-"activities-heart-intraday": {
-        "dataset": [
-            {
-                "time": "00:00:00",
-                "value": 64
-            },
-            {
-                "time": "00:00:10",
-                "value": 63
-            },
-            {
-                "time": "00:00:20",
-                "value": 64
-            },
-            {
-                "time": "00:00:30",
-                "value": 65
-            },
-            {
-                "time": "00:00:45",
-                "value": 65
-            }
-        ],
-        "datasetInterval": 1,
-        "datasetType": "second"
-    }
-}
-            var fitbitData;
-          let valueArray;
-          var myArray = [...array['activities-heart-intraday']['dataset'].map(value => value.value)];
-          var timeArray = [...array['activities-heart-intraday']['dataset'].map(value => value.time)];
+            
             
 //      // 心拍数を取得する
-//      getHeartrate();
+      getHeartrate();
 
       // 毎分ごとに心拍数をリクエストする
       // setInterval("getHeartrate()", 60000);
@@ -108,27 +75,60 @@
 //          console.log(d);
 //        });
 //      }
-        function getHeartrate(){
-          return $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"});
-      }
-      // 心拍数を取得する
-      getHeartrate().done(function(data, status, xhr){
-        var d = $.parseJSON(data);
-
+         
+      function getHeartrate(){
+        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"},function(data){ // アクセストークンをPOSTする
+          var d = $.parseJSON(data);
+//          $(".time").text("aaa"); // 時間を表示する
+          
+//          $(".heartrate").text(d[0].heartrate); // 心拍数を表示する
+          
         valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
-          console.log(valueArray);
           var timeArray = [...d[0]['time']['dataset'].map(value => value.time)];
-          showChart(valueArray);
-      }).fail(function(XMLHttpRequest, status, errorThrown) {
-   //失敗時の処理
-      });
-          console.log(valueArray);
-
-               
+          console.log(d[0]['time']['dataset'][0]);
+          console.log(d);
+          showChart(valueArray);  //チャート表示
+          $(".time").text(showAvarage(valueArray)); // 時間を表示する
+//          showAvarage(valueArray);  //心拍数平均の取得
+        });
+      }
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+//        function getHeartrate(){
+//          return $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"});
+//      }
+//      // 心拍数を取得する
+//      getHeartrate().done(function(data, status, xhr){
+//        var d = $.parseJSON(data);
+//
+//        valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
+//          console.log(valueArray);
+//          var timeArray = [...d[0]['time']['dataset'].map(value => value.time)];
+//          showChart(valueArray);  //チャート表示
+////          showAvarage(valueArray);  //心拍数平均の取得
+//      }).fail(function(XMLHttpRequest, status, errorThrown) {
+//   //失敗時の処理
+//      });
+//         
+//        //チャート表示
         function showChart(ary){
                 //今日の日付呼び出し
-                var now = moment();
-                var today = now.format("MM/DD");
+//                var now = moment();
+//                var today = now.format("MM/DD");
         var data = {
             //x軸
 //          labels: [timeArray],
@@ -138,12 +138,31 @@
         var options = {
           fullWidth: true,
           height: 300,
-            width:600
-            
+            width:600,                   //最大値最小値設定
+          low:55,
+          scales: {                          //軸設定
+                yAxes: [{                      //y軸設定
+                    display: true,             //表示設定
+                    scaleLabel: {              //軸ラベル設定
+                       display: true,          //表示設定
+                       labelString: '縦軸ラベル',  //ラベル
+                       fontSize: 18,               //フォントサイズ
+                    },
+                }],
+        }
         };
-        new Chartist.Line('#chart', data, options);
-            
-            }
+        new Chartist.Line('#chart', data, options);   
+        }
+          
+        //心拍数平均
+        function showAvarage(ary){
+          var sum = 0;
+          for(var i = 0; i<ary.length; i++){
+            var sum = sum + ary[i];
+          }
+          var avarage = sum/ary.length;
+          return avarage.toFixed(1);
+        }
 
     </script>
   </body>
