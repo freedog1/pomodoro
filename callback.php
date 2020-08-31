@@ -1,5 +1,6 @@
 <?php
   require_once("env.php"); // 環境設定ファイルの読み込み
+  require("show_status.php");
 
   // アクセストークンを取得する
   // POSTヘッダを生成する
@@ -51,7 +52,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <p class="title">25分間の心拍数</p>
             
-        <div id="chart"></div> 
+        <div id="chart2"></div> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js" type="text/javascript"></script>
         <script type="text/javascript">
             
@@ -63,21 +64,9 @@
       // 毎分ごとに心拍数をリクエストする
       // setInterval("getHeartrate()", 60000);
 
-//      function getHeartrate(){
-//        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"},function(data){ // アクセストークンをPOSTする
-//          var d = $.parseJSON(data);
-//          $(".time").text(d[0].time); // 時間を表示する
-//          $(".heartrate").text(d[0].heartrate); // 心拍数を表示する
-//          
-//        valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
-//          var timeArray = [...d[0]['time']['dataset'].map(value => value.time)];
-//          console.log(d[0]['time']['dataset'][0]);
-//          console.log(d);
-//        });
-//      }
-         
+      //心拍数の取得とチャートの表示
       function getHeartrate(){
-        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"},function(data){ // アクセストークンをPOSTする
+        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>", "date": '2020-08-25', "starttime": "02:00", "endtime": "02:25"},function(data){ // アクセストークンをPOSTする
           var d = $.parseJSON(data);
 //          $(".time").text("aaa"); // 時間を表示する
           
@@ -92,38 +81,8 @@
 //          showAvarage(valueArray);  //心拍数平均の取得
         });
       }
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-//        function getHeartrate(){
-//          return $.post("heartrate.php", {"token": "<?php echo $access_token; ?>"});
-//      }
-//      // 心拍数を取得する
-//      getHeartrate().done(function(data, status, xhr){
-//        var d = $.parseJSON(data);
-//
-//        valueArray = [...d[0]['time']['dataset'].map(value => value.value)];
-//          console.log(valueArray);
-//          var timeArray = [...d[0]['time']['dataset'].map(value => value.time)];
-//          showChart(valueArray);  //チャート表示
-////          showAvarage(valueArray);  //心拍数平均の取得
-//      }).fail(function(XMLHttpRequest, status, errorThrown) {
-//   //失敗時の処理
-//      });
-//         
+   
+
 //        //チャート表示
         function showChart(ary){
                 //今日の日付呼び出し
@@ -151,7 +110,7 @@
                 }],
         }
         };
-        new Chartist.Line('#chart', data, options);   
+        new Chartist.Line('#chart2', data, options);   
         }
           
         //心拍数平均
@@ -170,7 +129,7 @@
 
 <style type="text/css">
             .title{margin:30px 0 0;text-align:center;}
-            #chart{
+            #chart2{
               margin:10px auto;
               width:100%;
               max-width:600px;
