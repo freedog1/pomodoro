@@ -1,7 +1,6 @@
 <?php
   require_once("env.php"); // 環境設定ファイルの読み込み
   require("show_status.php");
-
   // アクセストークンを取得する
   // POSTヘッダを生成する
   $header = [
@@ -66,7 +65,7 @@
 
       //心拍数の取得とチャートの表示
       function getHeartrate(){
-        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>", "date": '2020-08-25', "starttime": "02:00", "endtime": "02:25"},function(data){ // アクセストークンをPOSTする
+        $.post("heartrate.php", {"token": "<?php echo $access_token; ?>", "date": "<?php echo $date; ?>", "starttime": "<?php echo $startTime; ?>", "endtime": "<?php echo $stopTime; ?>"},function(data){ // アクセストークンをPOSTする
           var d = $.parseJSON(data);
 //          $(".time").text("aaa"); // 時間を表示する
           
@@ -98,7 +97,7 @@
           fullWidth: true,
           height: 300,
             width:600,                   //最大値最小値設定
-          low:55,
+          low:50,
           scales: {                          //軸設定
                 yAxes: [{                      //y軸設定
                     display: true,             //表示設定
