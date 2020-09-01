@@ -47,7 +47,28 @@ try {
 
     // 配列($array)をJSONに変換(エンコード)する
     $php_json = json_encode($php_array);
+
+    //直近のポモドーロの日付、開始時刻、終了時刻の取得
+    $date_sql = "SELECT * FROM work ORDER BY stop_at DESC LIMIT 1";
+    $date_stmt = $pdo->prepare($date_sql);
+    $date_stmt->execute();
+    $stop_at = $date_stmt->fetch();
+
+    echo $stop_at['stop_at'];
+    echo '<br>';
+    //$stop_atを日付と時間に分解
+    $day = new DateTime($stop_at['stop_at']);
+    $date =  $day->format('Y-m-d');
+    echo $time = $day->format('H:i');
+echo '<br>';
+    $targetTime = strtotime($stop_at['stop_at']);
+    echo date('H:i',strtotime('-25 minute',$targetTime));
+
+
+    
 ?>
+
+
 
 
 
