@@ -76,8 +76,10 @@
           console.log(d[0]['time']['dataset'][0]);
           console.log(d);
           showChart(valueArray);  //チャート表示
-          $(".time").text(showAvarage(valueArray)); // 時間を表示する
-//          showAvarage(valueArray);  //心拍数平均の取得
+//          $(".time").text(showAverage(valueArray)); //心拍数平均を表示
+          $(".time").text(showAverage(valueArray).toFixed(1));
+          variance(valueArray);
+          
         });
       }
    
@@ -113,13 +115,31 @@
         }
           
         //心拍数平均
-        function showAvarage(ary){
+        function showAverage(ary){
           var sum = 0;
           for(var i = 0; i<ary.length; i++){
             var sum = sum + ary[i];
           }
-          var avarage = sum/ary.length;
-          return avarage.toFixed(1);
+          var average = sum/ary.length;
+//          return average.toFixed(1);
+            return average;
+        }
+          
+        //心拍数の分散を取得
+        function variance(ary){
+          var ave = showAverage(ary);
+          var varia = 0;
+          for (i=0; i<ary.length; i++) {
+            varia = varia + Math.pow(ary[i] - ave, 2);
+          } 
+          console.log(varia / ary.length)
+          return (varia / ary.length);
+        }
+          
+        //集中力判定
+        function concentrateScore(ary){
+          //
+//          if()
         }
 
     </script>
