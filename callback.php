@@ -79,7 +79,7 @@
 //          $(".time").text(showAverage(valueArray)); //心拍数平均を表示
           $(".time").text(showAverage(valueArray).toFixed(1));
           variance(valueArray);
-          
+          concentrateScore(valueArray);
         });
       }
    
@@ -139,7 +139,17 @@
         //集中力判定
         function concentrateScore(ary){
           //
-//          if()
+          var ave = showAverage(ary);
+          var varia = variance(ary);
+          if(ave > 65 && varia >10){
+            console.log("高ストレス");
+          }else if(ave > 65){
+            console.log("長集中");
+          }else if(varia > 65){
+            console.log("集中してない");
+          }else{
+            console.log("安定集中");
+          }
         }
 
     </script>
