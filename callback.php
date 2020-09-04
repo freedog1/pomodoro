@@ -14,6 +14,9 @@
   	'redirect_uri' => CALLBACK_URL,
   	'code' => $_GET['code'],
   );
+
+
+  
   // POST送信
   $options = array(
   	'http' => array(
@@ -34,7 +37,12 @@
   }
   $access_token = $token['access_token']; // アクセストークン
   // $user_id = $token['user_id']; // ユーザID
+
+
 ?>
+
+  
+
 <!DOCTYPE html>
 <html>
   <head>
