@@ -1,88 +1,113 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <title>ストップウォッチ</title>
-    <style>
-        /* ここにCSSを書いていきます。 */
-    </style>
-</head>
-<body>
-<div class="container">
-    <h1 class="title">StopWatch</h1>
-    <h1 id="timerLabel">00:10:00</h1>
-    <input type="button" class="myButton" onclick="start()" value="START" id="startBtn">
-    <input type="button" class="myButton" onclick="stop()" value="STOP">
-    <input type="button" class="myButton" onclick="reset()" value="RESET">
+
+<!doctype html>
+<html lang="ja" >
+  <meta charset="utf-8">
+  <head>
+     Bootstrap CSS 
+
+    <title>myPortfolio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+    <link href="dashboard.css" rel="stylesheet">
+    <link href="../example.css" rel="stylesheet">
+    <style type="text/css">
+            .sidebar-sticky{margin-top: 30px;}
+            .d-flex{margin-top: 15px;}
+ 
+</style>
+  </head>
+  <body >
+    <a id="skippy" class="sr-only sr-only-focusable" href="#content">
+  <div class="container">
+    <span class="skiplink-text">Skip to main content</span>
+  </div>
+</a>
+
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+<!--   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a> -->
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">ポートフォリオ</a>
+
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar ">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="home"></span>
+              <!-- Dashboard <span class="sr-only">(current)</span> -->
+              ホーム <span class="sr-only">(現在位置)</span>
+            </a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="users"></span>
+              <!-- Dashboard <span class="sr-only">(current)</span> -->
+              自己紹介 <span class="sr-only">(現在位置)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              <!-- Orders -->
+              TSUBUYAKI
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              <!-- Products -->
+              ポモドーロ
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="layers"></span>
+              <!-- Customers -->
+              リンク
+            </a>
+          </li>
+
+        </ul>
+
+        
+        <ul class="nav flex-column mb-2">
+
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <!-- <h1 class="h2">Dashboard</h1> -->
+        <h1 class="h2">自己紹介</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> -->
+
+          </div>
+
+        </div>
+      </div>
+
+      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+
+      <!-- <h2>Section title</h2> -->
+      <h2>タイトル</h2>
+      
+    </main>
+  </div>
 </div>
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
 <script>
-    var status = 0; // 0:停止中 1:動作中
-    var time = 1000;
-    var startBtn = document.getElementById("startBtn");
-    var timerLabel = document.getElementById('timerLabel');
-
-    // STARTボタン
-	function start(){
-        // 動作中にする
-        status = 1;
-        // スタートボタンを押せないようにする
-        startBtn.disabled = true;
-
-        timer();
-    }
-
-    // STOPボタン
-    function stop(){
-        // 停止中にする
-        status = 0;
-        // スタートボタンを押せるようにする
-        startBtn.disabled = false;
-    }
-
-    // RESETボタン
-    function reset(){
-        // 停止中にする
-        status = 0;
-        // タイムを0に戻す
-        time = 0;
-        // タイマーラベルをリセット
-        timerLabel.innerHTML = '00:00:00';
-        // スタートボタンを押せるようにする
-        startBtn.disabled = false;
-    }
-
-    function timer(){
-        // ステータスが動作中の場合のみ実行
-        if (status == 1) {
-            setTimeout(function() {
-                time--;
-
-                // 分・秒・ミリ秒を計算
-                var min = Math.floor(time/100/60);
-                var sec = Math.floor(time/100);
-                var mSec = time % 100;
-
-                // 分が１桁の場合は、先頭に０をつける
-                if (min < 10) min = "0" + min;
-
-                // 秒が６０秒以上の場合　例）89秒→29秒にする
-                if (sec >= 60) sec = sec % 60;
-
-                // 秒が１桁の場合は、先頭に０をつける
-                if (sec < 10) sec = "0" + sec;
-    
-		// ミリ秒が１桁の場合は、先頭に０をつける
-                if (mSec < 10) mSec = "0" + mSec;
-
-                // タイマーラベルを更新
-                timerLabel.innerHTML = min + ":" + sec + ":" + mSec;
-                
-                //0になったらreset()を呼ぶ
-                if(time == 0) reset();
-                // 再びtimer()を呼び出す
-                timer();
-            }, 10);
-        }
-    }
+  feather.replace()
 </script>
-</body>
+
+
+
+  </body>
+</html>
