@@ -49,7 +49,7 @@
         <!-- <a class="nav-link active" href="#">Home</a> -->
         <a class="nav-link active" href="index.php">ホーム</a>
         <!-- <a class="nav-link" href="#">Features</a> -->
-        <a class="nav-link" href="fitbit_index.php">データ</a>
+        <a class="nav-link" target="_blank" href="fitbit_index.php">データ</a>
       </nav>
     </div>
   </header>
