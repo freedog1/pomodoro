@@ -1,65 +1,129 @@
 
-
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-<!-- jquery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    
-    
+<!doctype html>
+<html lang="ja" >
+  <meta charset="utf-8">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>ポモドーロ</title>
-    <style>
-        /* ここにCSSを書いていきます。 */
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+    <link href="cover.css" rel="stylesheet">
+    
+        <style>
         #rest-time{
             display: none;
         }
         #timerType{
-            color: crimson;
-            font-size: 30px;
+
+    color: darkslateblue;
+    background: #c6e4ff;
+    border-bottom: solid 6px #aac5de;
+    border-radius: 9px;
+            font-size: 40px;
         }
+        .card-deck{
+            font-size: 30px;
+            color:black;
+            
+          }
+          .font-weight-normal{
+            font-size:20px;
+            color:darkred;
+          }
         
     </style>
-</head>
-<body>
-<div class="container">
-    <h1 class="title">ポモドーロタイマー</h1>
+  </head>
+  <body  class="text-center" >
+    <a id="skippy" class="sr-only sr-only-focusable" href="#content">
+  <div class="container">
+    <span class="skiplink-text">Skip to main content</span>
+  </div>
+</a>
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <!-- <h3 class="masthead-brand">Cover</h3> -->
+      <h3 class="masthead-brand">ポモドーロ</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <!-- <a class="nav-link active" href="#">Home</a> -->
+        <a class="nav-link active" href="index.php">ホーム</a>
+        <!-- <a class="nav-link" href="#">Features</a> -->
+        <a class="nav-link" href="fitbit_index.php">データ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main role="main" class="inner cover">
+    <!-- <h1 class="cover-heading">Cover your page.</h1> -->
+    <h1 class="cover-heading">ポモドーロタイマー</h1>
+    
+    <!-- <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p> -->
+    <p class="lead"></p>
     <h2 id="timerType">25分作業</h2>
     <h1 id="timerLabel">00:01:00</h1>
+    
 <!--    <h1 id="timerLabel">25:00:00</h1>-->
-    <input type="button" class="myButton ajax" onclick="start()" value="START" id="startBtn">
-    <input type="button" class="myButton" onclick="stop()" value="STOP">
-    <input type="button" class="myButton" onclick="reset()" value="RESET">
-</div>
+    <input type="button" class="myButton btn-lg btn-primary ajax" onclick="start()" value="START" id="startBtn">
+    <input type="button" class="myButton btn-lg btn-warning" onclick="stop()" value="STOP">
+    <input type="button" class="myButton btn-lg btn-success" onclick="reset()" value="RESET">
     
-<!--作業時間の表示    -->
-<div id="status">
-    <h3>今日の作業時間</h3>
-    <?php todayWorkTime(0); ?>
-    <h3>今日のポモドーロ回数</h3>
-    <?php todayWorkTime(1); ?>
-    <h3>今週の作業時間</h3>
-    <?php todayWorkTime(2); ?>
-    <h3>今週のポモドーロ回数</h3>
-    <?php todayWorkTime(3); ?>
-    
-
-    
-    <div id="show_status">
-    <a target=”_blank” href="show_status.php">ポモドーロの記録を見る</a>
+    <p class="lead">
+      <!-- <a href="#" class="btn btn-lg btn-secondary">Learn more</a> -->
+    </p>
+    <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
+        <h4 class="my-0 font-weight-normal">今日の作業時間</h4>
+      </div>
+      <div class="card-body">
+        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
+        <?php todayWorkTime(0); ?>
+      </div>
     </div>
+      
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
+        <h4 class="my-0 font-weight-normal">今日のポモドーロ回数</h4>
+      </div>
+      <div class="card-body">
+        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
+        <?php todayWorkTime(1); ?>
+      </div>
+    </div>
+  </div>
+    
+      <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
+        <h4 class="my-0 font-weight-normal">今週の作業時間</h4>
+      </div>
+      <div class="card-body">
+        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
+        <?php todayWorkTime(2); ?>
+      </div>
+    </div>
+      
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
+        <h4 class="my-0 font-weight-normal">今週のポモドーロ回数</h4>
+      </div>
+      <div class="card-body">
+        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
+        <?php todayWorkTime(3); ?>
+      </div>
+    </div>
+  </div>
+    
     <div id="comment">
         <p>----コメント----</p>
         <p>デモ用のため、作業時間を1秒、休憩時間を0.5秒にしています。</p>
     </div>
-
-    
-    
-</div>
-    
-    
-<script type="text/javascript">
+    <script type="text/javascript">
     var status = 0; // 0:停止中 1:動作中
     var work_status = 0; // 0:作業中 1:休憩中
     var time = 100;
@@ -151,7 +215,7 @@
                 if(time == 0) {
                     sound();　　//音呼び出し
                     if(work_status == 0){
-                        timerType.innerHTML = "お疲れ様です。5分休憩しましょう!";
+                        timerType.innerHTML = "お疲れ様です。<br>5分休憩しましょう!";
                         work_status = 1;
 //                        作業時間の登録
 
@@ -167,7 +231,7 @@
                         console.log(response[1]);
 
                     }).fail(function(xhr) {
-                        console.log("ajax通信に失敗しました");
+//                        console.log("ajax通信に失敗しました");
 
                     });
 
@@ -197,8 +261,19 @@
             <source src="decision26.wav" type="audio/wav">
         </audio>
     
+    
+    
+  </main>
 
-</body>
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    </div>
+  </footer>
+</div>
+
+
+  </body>
 </html>
 
 <?php
@@ -256,3 +331,4 @@
  
 
 ?>
+
