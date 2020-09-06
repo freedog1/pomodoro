@@ -134,7 +134,15 @@
           .col-4{
              margin: auto;
           }
-
+          #syutyu{
+            font-size: 20px;
+            border-top: solid 6px #1dc1d6;
+            
+          }
+          #cons-type{
+            background-color:aliceblue;
+            font-size: 25px;
+          }
         
     </style>
   </head>
@@ -176,7 +184,7 @@
     <P><br></P>
     <div class="row chart-type">
       <div class="col-8">
-    <p>25分の平均心拍数: <span class="time"></span></p>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <p class="title">25分間の心拍数</p>
             
@@ -205,6 +213,7 @@
           showChart(valueArray);  //チャート表示
 //          $(".time").text(showAverage(valueArray)); //心拍数平均を表示
           $(".time").text(showAverage(valueArray).toFixed(1));
+          $(".cons").text(concentrateScore(valueArray));
           variance(valueArray);
           concentrateScore(valueArray);
         });
@@ -270,72 +279,35 @@
           var varia = variance(ary);
           if(ave > 65 && varia >10){
             console.log("高ストレス");
+            return "高ストレス　　休憩しましょう";
           }else if(ave > 65){
             console.log("高集中");
+            return "高集中   さすが！！";
           }else if(varia > 65){
             console.log("集中してない");
+            return "集中してない";
           }else{
             console.log("安定集中");
+            return "安定集中  その調子!";
           }
         }
 
     </script>
       </div>
+      <div class="col-4">
+        <p>左チャートは直近の作業の心拍数です。</p>
+        <p>平均心拍数: <span class="time"></span></p>
+        <p id="syutyu">↓↓集中力評価↓↓</p>
+        <p id="cons-type"><span class="cons"></span></p>
+      </div>
     </div>
     <p class="lead">
       <!-- <a href="#" class="btn btn-lg btn-secondary">Learn more</a> -->
     </p>
-    <div class="card-deck mb-3 text-center">
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
-        <h4 class="my-0 font-weight-normal">今日の作業時間</h4>
-      </div>
-      <div class="card-body">
-        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
-        <?php todayWorkTime(0); ?>
-      </div>
-    </div>
-      
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
-        <h4 class="my-0 font-weight-normal">今日のポモドーロ回数</h4>
-      </div>
-      <div class="card-body">
-        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
-        <?php todayWorkTime(1); ?>
-      </div>
-    </div>
-  </div>
-    
-      <div class="card-deck mb-3 text-center">
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
-        <h4 class="my-0 font-weight-normal">今週の作業時間</h4>
-      </div>
-      <div class="card-body">
-        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
-        <?php todayWorkTime(2); ?>
-      </div>
-    </div>
-      
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <!-- <h4 class="my-0 font-weight-normal">Free</h4> -->
-        <h4 class="my-0 font-weight-normal">今週のポモドーロ回数</h4>
-      </div>
-      <div class="card-body">
-        <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
-        <?php todayWorkTime(3); ?>
-      </div>
-    </div>
-  </div>
     
     <div id="comment">
         <p>----コメント----</p>
-        <p>Quiita</p>
+        <p>集中力評価は４タイプあります。</p>
     </div>
     
   </main>
