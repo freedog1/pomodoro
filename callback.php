@@ -14,8 +14,6 @@
   	'redirect_uri' => CALLBACK_URL,
   	'code' => $_GET['code'],
   );
-
-
   
   // POST送信
   $options = array(
@@ -202,6 +200,10 @@
       function getHeartrate(){
         $.post("heartrate.php", {"token": "<?php echo $access_token; ?>", "date": "<?php echo $date; ?>", "starttime": "<?php echo $startTime; ?>", "endtime": "<?php echo $stopTime; ?>"},function(data){ // アクセストークンをPOSTする
           var d = $.parseJSON(data);
+          console.log("<?php echo $startTime; ?>");
+          console.log("<?php echo $stopTime; ?>");
+          console.log(timeArray);
+          
 //          $(".time").text("aaa"); // 時間を表示する
           
 //          $(".heartrate").text(d[0].heartrate); // 心拍数を表示する
@@ -211,7 +213,7 @@
           console.log(d[0]['time']['dataset'][0]);
           console.log(d);
           showChart(valueArray);  //チャート表示
-//          $(".time").text(showAverage(valueArray)); //心拍数平均を表示
+          //心拍数平均を表示
           $(".time").text(showAverage(valueArray).toFixed(1));
           $(".cons").text(concentrateScore(valueArray));
           variance(valueArray);
@@ -282,7 +284,7 @@
             return "高ストレス　　休憩しましょう";
           }else if(ave > 65){
             console.log("高集中");
-            return "高集中   さすが！！";
+            return "高集中   　　　さすが！！";
           }else if(varia > 65){
             console.log("集中してない");
             return "集中してない";
@@ -307,7 +309,7 @@
     
     <div id="comment">
         <p>----コメント----</p>
-        <p>集中力評価は４タイプあります。</p>
+        <p>集中力評価は４タイプあります。fitbitを装着していない時のポモドーロは表示されません。</p>
     </div>
     
   </main>
