@@ -54,15 +54,12 @@ try {
     $date_stmt->execute();
     $stop_at = $date_stmt->fetch();
 
-    echo $stop_at['stop_at'];
-    echo '<br>';
     //$stop_atを日付と時間に分解
     $day = new DateTime($stop_at['stop_at']);
     $date =  $day->format('Y-m-d');
-    echo $time = $day->format('H:i');
-echo '<br>';
+    $stopTime = $day->format('H:i');
     $targetTime = strtotime($stop_at['stop_at']);
-    echo date('H:i',strtotime('-25 minute',$targetTime));
+    $startTime = date('H:i',strtotime('-25 minute',$targetTime));
 
 
     
@@ -122,8 +119,8 @@ echo '<br>';
         };
         var options = {
           fullWidth: true,
-          height: 300,
-            width:600
+          height: 200,
+            width:400
             
         };
         new Chartist.Line('#chart', data, options);
