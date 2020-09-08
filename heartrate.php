@@ -1,12 +1,15 @@
 <?php
   // 心拍数
     $access_token = $_POST["token"]; // アクセストークン
+    $test_date = $_POST["date"]; // アクセストークン
+    $test_starttime = $_POST["starttime"]; // アクセストークン
+    $test_endtime = $_POST["endtime"]; // アクセストークン
 
     $api_url = 'https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec.json'; // Get Heart Rate Intraday Time Series
     
-    $test_date= '2020-08-25';
-    $test_starttime = '02:00';
-    $test_endtime = '02:25';
+//    $test_date= '2020-08-25';
+//    $test_starttime = '02:00';
+//    $test_endtime = '02:25';
 //    $api_url2 = 'https://api.fitbit.com/1/user/-/activities/heart/date/${test_date}/1d/1m/time/${test_starttime}/${test_endtime}.json'; 
 //    $api_url2 = 'https://api.fitbit.com/1/user/-/activities/heart/date/2020-08-25/1d/1m/time/02:00/02:25.json';
  $api_url2 = "https://api.fitbit.com/1/user/-/activities/heart/date/${test_date}/1d/1min/time/${test_starttime}/${test_endtime}.json";
