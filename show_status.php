@@ -40,10 +40,37 @@ try {
             $php_array += array(
                 $i => $count[$i],
             );       
-            }
-            
+            }   
         }
     }
+    
+    
+    //1週間ごと7週分分のレコード数を配列に格納
+    function weeklyChart(){
+      
+      for($i = 0;$i<49; $i++){
+        //today1設定
+        $stmt->bindValue(':today1',date("Y/m/d 00:00:00", strtotime("-{$i} day")));
+        //today2設定
+        $stmt->bindValue(':today2',date("Y/m/d 23:59:59", strtotime("-{$i} day")));
+        
+        if($stmt->execute()){
+        //テーブルのレコード数を取得する
+          $day_row_cnt = $stmt->rowCount();
+          $count[$i] = $day_row_cnt;
+          if($i == 0){
+            $php_array = array(
+            $i => $count[$i],
+            );                
+          }else{
+            $php_array += array(
+              $i => $count[$i],
+            );       
+          }   
+        }
+      }
+    }
+    
 
     // 配列($array)をJSONに変換(エンコード)する
     $php_json = json_encode($php_array);
